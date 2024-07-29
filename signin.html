@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-In</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+		<script>
+			window.fbAsyncInit = function() {
+				FB.init({
+					appId      : '2873588276142147',
+					cookie     : true,
+					xfbml      : true,
+					version    : 'v20.0'
+				});
+					
+				FB.AppEvents.logPageView();   
+					
+			};
+		
+			(function(d, s, id){
+				 var js, fjs = d.getElementsByTagName(s)[0];
+				 if (d.getElementById(id)) {return;}
+				 js = d.createElement(s); js.id = id;
+				 js.src = "https://connect.facebook.net/en_US/sdk.js";
+				 fjs.parentNode.insertBefore(js, fjs);
+			 }(document, 'script', 'facebook-jssdk'));
+        // Check the login status
+        function statusChangeCallback(response) {
+            console.log('statusChangeCallback');
+            console.log(response);
+            // The response object is returned with a status field that lets the app know the current login status of the person.
+            if (response.status === 'connected') {
+                // Logged into your webpage and Facebook.
+                testAPI();
+            } else {
+                // Not logged into your app or we are unable to tell.
+                console.log('Please log into this webpage.');
+            }
+        }
+
+        // Function to handle the login button
+        function checkLoginState() {
+            FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+            });
+        }
+
+        // Test API call
+        function testAPI() {
+            console.log('Welcome! Fetching your information.... ');
+            FB.api('/me', function(response) {
+                console.log('Successful login for: ' + response.name);
+								window.location.href = "https://google.com";
+            });
+        }
+		</script>
+    <script>
+        function handleCredentialResponse(response) {
+            console.log("Encoded JWT ID token: " + response.credential);
+        }
+        window.onload = function () {
+            google.accounts.id.initialize({
+                client_id: '638480568281-t8d82g3vd0e3k1lidn00u1oc9asnhn56.apps.googleusercontent.com',
+                callback: handleCredentialResponse
+            });
+            google.accounts.id.renderButton(
+                document.getElementById('buttonDiv'),
+                { theme: 'outline', size: 'large' }  // customization attributes
+            );
+            google.accounts.id.prompt(); // also display the One Tap dialog
+        }
+    </script>
+</head>
+<body>
+    <section class="gjs-section" id="ibiw6p">
+      <div class="gjs-container" id="iscsi7">
+				<div id="g_id_onload"
+						data-client_id="638480568281-t8d82g3vd0e3k1lidn00u1oc9asnhn56.apps.googleusercontent.com"
+						data-login_uri="http://localhost:8080/wee.html"
+						data-auto_prompt="false">
+				</div>
+				<div class="g_id_signin" data-type="standard"></div>
+				<!-- Facebook Login Button -->
+				<fb:login-button 
+						scope="public_profile,email"
+						onlogin="checkLoginState();">
+				</fb:login-button>
+				<section>OR</section>
+        <form method="get" id="i45b5q">
+          <div><label>Email</label><input type="email"/></div>
+          <div><label>Password</label><input type="password"/></div>
+          <div><button type="button">Sing-In</button></div>
+        </form>
+      </div>
+    </section>
+</body>
+<style>
+        * {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+}
+
+.gjs-container {
+	width: 90%;
+	margin: 0 auto;
+	max-width: 1200px;
+}
+
+.gjs-section {
+	display: flex;
+	padding: 50px 0;
+}
+
+#ibiw6p {
+	width: 50vw;
+	height: 50vh;
+	position: relative;
+	top: 25vh;
+	left: 25vw;
+}
+
+#i45b5q {
+	height: 100%;
+	width: 50%;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	flex-wrap: nowrap;
+	flex-direction: column;
+}
+</style>
+</html>
